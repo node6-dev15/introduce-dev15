@@ -1,0 +1,166 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+
+* {
+    font-family: "Gowun Batang", serif;
+}
+
+.mytitle {
+    height: 250px;
+    color: black;
+    margin: 30px auto 10px auto;
+    font-weight: bold;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVHxWzB_9KbBPtkTB-9TyE1ISj8ZQ1Fs5u6zTL5X3njzP8LV6XvviYwlZ0z4omvHkRKgI&usqp=CAU');
+    background-position: center;
+    background-size: cover;
+}
+
+.mybbs {
+    width: 95%;
+    max-width: 500px;
+    max-height: 100px;
+    margin: auto;
+}
+
+.card {
+    margin: 10px auto;
+}
+
+.savebtn {
+    margin-top: 5px;
+}
+
+.mypost {
+    width: 95%;
+    max-width: 500px;
+    margin: 20px auto;
+
+    box-shadow: 0px 0px 3px 0px black;
+    padding: 20px;
+}
+
+.mypost > button {
+    margin-top: 15px;
+}
+
+.cardbtn {
+    text-align: right;
+    margin: 5px;
+}
+
+#nickname {
+    margin-top: 10px;
+}
+
+/* 이 아래로 nav bar 항목 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #8DA4D0;
+            padding: 8px 12px;
+            --text-color: white;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-color);
+            border: 3px;
+        }
+
+        .navbar_logo {
+            font-size: 24px;
+            color: white;
+        }
+
+        .navbar_logo i {
+            color: darksalmon;
+        }
+
+        .navbar_menu {
+            display: flex;
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .navbar_menu li {
+            padding: 10px 30px;
+        }
+
+        .navbar_menu li:hover {
+            background-color: darksalmon;
+            border-radius: 10px;
+        }
+
+        .navbar_icon {
+            list-style: none;
+            color: white;
+            display: flex;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .navbar_icon li {
+            padding: 8px 12px;
+        }
+
+        .navbar_toggleBtn {
+            display: none;
+            position: absolute;
+            right: 32px;
+            font-size: 24px;
+            color: darksalmon;
+        }
+
+
+        @media screen and (max-width: 768px) {
+            .navbar{
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 8px 24px;
+                /*첫번째 로고는 왼쪽으로 정렬하고 싶고, 이때 중심축은 수직임.
+                우리는 수평에서 얘를 왼쪽에 놓고싶음.
+                그래서 flex-start로 */
+            }
+            .navbar_menu {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                width: 100%
+                /*위 navbar에서 align-items로 로고만 수평으로 조절.
+                 이때 변화 없이 여전히 flex-start 지점에 모여있다면,
+                 menu의 width 크기가 작아서 그런거임*/
+            }
+
+            .navbar_menu li{
+                width: 100%;
+                text-align: center;
+            }
+
+            .navbar_icon {
+                display: none;
+                justify-content: center;
+                width: 100%;
+                /*이때 width: 100% 해도 중간으로 안 오면 리스트에 기본적용된 padding 때문.
+                navbar-icons 가서 padding-left:0 하면 됨.*/
+            }
+            .navbar_toggleBtn {
+                display: block;
+            }
+
+            .navbar_menu.active,
+            .navbar_icon.active {
+                display: flex;
+            }
+        }
+

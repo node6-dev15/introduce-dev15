@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <div>
+        <nav class="navbar">
+            <div class="navbar_logo">
+                <i class="fa-solid fa-hippo"></i>
+                <a href="/">BCOMDEV15</a>
+            </div>
+            <ul class="navbar_menu">
+                <li><a href="main">Home</a></li>
+                <li><a href="Team project.html">Project</a></li>
+                <li><a href="Member.html">Member</a></li>
+                <li><a href="bbs.html">BBS</a></li>
+
+            </ul>
+            <ul class="navbar_icon">
+                <li><i class="fa-solid fa-hippo"></i></li>
+            </ul>
+            <a class="navbar_toggleBtn" href="#">
+                <i class="fa-solid fa-bars"></i>
+            </a>
+        </nav>
+    </div>
+
+    <title>개발자가되구15</title>
+    <!-- css, js파일 import -->
+    <link rel="stylesheet" type="text/css" href="static/bbs.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- 파이어베이스 설정 -->
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";;
+        import { query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA1mO8GZrbaZbgCH2JgU38wlO6IRGgBu80",
+            authDomain: "sparta-4771e.firebaseapp.com",
+            projectId: "sparta-4771e",
+            storageBucket: "sparta-4771e.appspot.com",
+            messagingSenderId: "671258839388",
+            appId: "1:671258839388:web:eb0f183c8eaa82d4b65999",
+            measurementId: "G-2MYTNCTEDH"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        $("#postingbtn").click(async function () {
+            let comment = $('#comment').val();
+            let nickname = $('#nickname').val();
+            let date = Date('%Y-%m-%d%H%S');
+
+            let doc = {
+                'comment': comment,
+                'nickname': nickname,
+                'date': date
+            };
+
+            if (nickname == "") {
+                alert('닉네임을 입력해주세요');
+            } else if (comment == "") {
+                alert('코멘트를 입력해 주세요');
+            } else {
+                await addDoc(collection(db, "bbs"), doc);
+                alert('저장 완료!');
+                window.location.reload();
+            }
+        });
+
+        $("#modifybtn").click(async function () {
+            let row = doc.data();
+
+            let nickname = row['nickname'];
+            let comment = row['comment'];
+
+            let doc = {
+                'comment': comment,
+                'nickname': nickname,
+                'date': date
+            };
+
+            if (nickname == "") {
+                alert('닉네임을 입력해주세요');
+            } else if (comment == "") {
+                alert('코멘트를 입력해 주세요');
+            } else {
+                await updateDoc(collection(db, "bbs"), doc);
+                alert('저장 완료!');
+                window.location.reload();
+            }
+
+
+        });
+
+        let docs = await getDocs(query(collection(db, "bbs"), orderBy('date', 'desc'), limit(5)));
+        docs.forEach((doc) => {
+            let row = doc.data();
+
+            let nickname = row['nickname'];
+            let comment = row['comment'];
+            let date = row['date'];
+
+            let temp_html = `            
+        <div class="card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p id="cmt">${comment}</p>
+                        <div class = "cardbtn">
+                        <button type="button" class="btn btn-outline-primary" id = "modifybtn">수정</button>
+                        <button type="button" class="btn btn-outline-secondary" id = "cancelbtn">삭제</button>
+                        </div>
+                    <footer id="nickname" class="blockquote-footer">${nickname}</footer>
+                    <footer id="date" class="blockquote-footer">${date}</footer>                            
+                </blockquote>
+            </div>
+        </div>`;
+            $('#comment-list').append(temp_html);
+        });
+
+
+    </script>
+</head>
+
+<body>
+    <div class="mytitle">
+        <h1>TEAM. 개발자가되구15</h1>
+    </div>
+    <div class="mypost">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="nickname" placeholder="닉네임">
+            <label for="floatingInput">닉네임</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" id="comment" placeholder="내용" style="height: 100px"></textarea>
+            <label for="floatingTextarea2">내용</label>
+        </div>
+        <button id="postingbtn" type="button" class="btn btn-dark">방명록 남기기</button>
+    </div>
+
+    <div class="mybbs" id="comment-list">
+
+    </div>
+    </div>
+</body>
+
+</html>
