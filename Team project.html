@@ -36,8 +36,8 @@
             width: 150px;
             height: 50px;
             background-color: transparent;
-            color: white;
-            border: 1px solid white;
+            color: black;
+            border: 1px solid black;
             border-radius: 5px;
 
             margin-top: 20px;
@@ -72,6 +72,11 @@
         .mybtn>button {
             margin-right: 5px;
         }
+
+        .card-updel {
+            display: flex;
+            justify-content: end;
+        }
     </style>
     <script type="module">
 
@@ -79,7 +84,8 @@
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
+        import { doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
         const firebaseConfig = {
@@ -93,47 +99,21 @@
         };
 
 
-
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        $("#postingbtn").click(async function () {
-            let image = $('#image').val();
-            let name = $('#name').val();
-            let age = $('#age').val();
-            let date = $('#date').val();
-            let br = $('#br').val();
-            let github = $('#github').val();
-            let mbti = $('#mbti').val();
-            let go = $('#go').val();
-
-            let doc = {
-                'image': image,
-                'name': name,
-                'age': age,
-                'date': date,
-                'br': br,
-                'github': github,
-                'mbti': mbti,
-                'go': go
-            };
-            await addDoc(collection(db, "team"), doc);
-            alert('저장 완료!');
-            window.location.reload();
-        });
 
         $("#savebtn").click(async function () {
-            $('#postingbox').toggle();
+            location.replace('resister.html');
         })
 
-        $("#savebtn").click(async function () {
-            $('#mybtn').toggle();
-        })
+        const board = collection(db, "team");
 
-        let docs = await getDocs(collection(db, "team"));
-        docs.forEach((doc) => {
-            let row = doc.data();
+        let docs = await getDocs(query(board, orderBy('name', 'asc')));
 
+        docs.forEach((tempdoc) => {
+            let row = tempdoc.data();
+            let doc_id = tempdoc.id;
             let image = row['image'];
             let name = row['name'];
             let age = row['age'];
@@ -143,8 +123,12 @@
             let mbti = row['mbti'];
             let go = row['go'];
 
+
+            let div = document.createElement('div');
+            div.className = 'col';
+
+
             let temp_html = `            
-            <div class="col">
                 <div class="card h-100">
                     <img src="${image}"
                         class="card-img-top" alt="...">
@@ -158,12 +142,102 @@
                     </div>
                     <div class="card-footer">
                         <small class="text-body-secondary">각오 한마디 : ${go}</small>
-
                     </div>
                 </div>
-            </div>`;
-            $('#card').append(temp_html);
+                `
+
+
+            let onoff = "off"
+            div.innerHTML = temp_html;
+
+            div.addEventListener('click', (e) => {
+
+                $('.mypostingbox').remove();
+
+                let temp_modify = `
+                    <div class="mypostingbox">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="inputimage" placeholder="이미지" input value="${image}">
+                                <label for="floatingInput">팀원 이미지</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="inputname" placeholder="이름" input value="${name}">
+                                <label for="floatingInput">이름</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="inputage" placeholder="나이" input value="${age}">
+                                <label for="floatingInput">나이</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="inputdate" placeholder="취미" input value="${date}">
+                                <label for="floatingInput">취미</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="inputbr" placeholder="블로그" input value="${br}">
+                                <label for="floatingInput">블로그</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="inputgithub" placeholder="깃허브" input value="${github}">
+                                <label for="floatingInput">깃허브</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="inputmbti" placeholder="mbti" input value="${mbti}">
+                                <label for="floatingInput">mbti</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="inputgo" placeholder="각오 한마디" input value="${go}">
+                                <label for="floatingInput">각오 한마디</label>
+                        </div>
+                        <div class="mybtn">
+                            <button id="update-btn" type="button" class="btn btn-outline-info">수정하기</button>
+                            <button id="delete-btn" type="button" class="btn btn-dark">삭제하기</button>
+                            <button id="close" type="button" class="btn btn-outline-dark">닫기</button>
+                        </div>
+                    </div>`
+
+                $('#postingbox').append(temp_modify);
+
+                $('#update-btn').click(async function () {
+
+                    let inputimage = $('#inputimage').val();
+                    let inputname = $('#inputname').val();
+                    let inputage = $('#inputage').val();
+                    let inputdate = $('#inputdate').val();
+                    let inputbr = $('#inputbr').val();
+                    let inputgithub = $('#inputgithub').val();
+                    let inputmbti = $('#inputmbti').val();
+                    let inputgo = $('#inputgo').val();
+
+
+                    await updateDoc(doc(db, "team", doc_id), {
+                        'image': inputimage,
+                        'name': inputname,
+                        'age': inputage,
+                        'date': inputdate,
+                        'br': inputbr,
+                        'github': inputgithub,
+                        'mbti': inputmbti,
+                        'go': inputgo
+                    });
+
+                    window.location.reload();
+                })
+
+                $('#delete-btn').click(async function () {
+                    await deleteDoc(doc(db, "team", doc_id));
+
+                    window.location.reload();
+                })
+
+                $('#close').click(async function () {
+                    $('.mypostingbox').remove();
+                })
+
+            })
+
+            $('#card').append(div);
         });
+
     </script>
 </head>
 
@@ -172,43 +246,9 @@
         <h1>TEAM. 개발자가되구15</h1>
         <button id="savebtn">팀원 저장</button>
     </div>
-    <div class="mypostingbox" id="postingbox">
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="image" placeholder="팀원 이미지">
-            <label for="floatingInput">팀원 이미지</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="name" placeholder="이름">
-            <label for="floatingInput">이름</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="age" placeholder="나이">
-            <label for="floatingInput">나이</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="date" placeholder="취미">
-            <label for="floatingInput">취미</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="br" placeholder="블로그">
-            <label for="floatingInput">블로그</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="github" placeholder="깃허브">
-            <label for="floatingInput">깃허브</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="mbti" placeholder="mbti">
-            <label for="floatingInput">mbti</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="go" placeholder="각오 한마디">
-            <label for="floatingInput">각오 한마디</label>
-        </div>
-        <div class="mybtn">
-            <button id="postingbtn" type="button" class="btn btn-dark">기록하기</button>
-            <button type="button" class="btn btn-outline-dark">닫기</button>
-        </div>
+
+    <div id="postingbox">
+
     </div>
 
     <div class="mycards">
