@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>등록</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<style>
+    .mypostingbox {
+        width: 500px;
+        margin: 30px auto 0px auto;
+        padding: 20px;
+        box-shadow: 0px 0px 3px 0px blue;
+        border-radius: 5px;
+    }
+
+    .mybtn {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        margin: 10px auto 5px auto;
+
+    }
+
+    .mybtn>button {
+        margin-right: 5px;
+    }
+</style>
+
+<script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCbgdblS-zsVJTAhV8nkMQ3OoThzBXNwiM",
+        authDomain: "sparta-85659.firebaseapp.com",
+        projectId: "sparta-85659",
+        storageBucket: "sparta-85659.appspot.com",
+        messagingSenderId: "26883058746",
+        appId: "1:26883058746:web:7d9b4cbe543b53132c1903",
+        measurementId: "G-FTB7K4LEVD"
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+
+    $("#postingbtn").click(async function () {
+        let image = $('#image').val();
+        let name = $('#name').val();
+        let age = $('#age').val();
+        let date = $('#date').val();
+        let br = $('#br').val();
+        let github = $('#github').val();
+        let mbti = $('#mbti').val();
+        let go = $('#go').val();
+
+        let temp_data = {
+            'image': image,
+            'name': name,
+            'age': age,
+            'date': date,
+            'br': br,
+            'github': github,
+            'mbti': mbti,
+            'go': go
+        };
+        await addDoc(collection(db, "team"), temp_data);
+
+        const teamRef = doc(db, 'team', name)
+        await updateDoc(memRef, {
+            capital: true
+        });
+
+        location.replace('Team project.html');
+    });
+
+    $("#close").click(async function () {
+        location.replace('Team project.html');
+    });
+
+</script>
+
+<body>
+
+    <div class="mypostingbox" id="postingbox">
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="image" placeholder="팀원 이미지">
+            <label for="floatingInput">팀원 이미지</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="name" placeholder="이름">
+            <label for="floatingInput">이름</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="age" placeholder="나이">
+            <label for="floatingInput">나이</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="date" placeholder="취미">
+            <label for="floatingInput">취미</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="br" placeholder="블로그">
+            <label for="floatingInput">블로그</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="github" placeholder="깃허브">
+            <label for="floatingInput">깃허브</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="mbti" placeholder="mbti">
+            <label for="floatingInput">mbti</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="go" placeholder="각오 한마디">
+            <label for="floatingInput">각오 한마디</label>
+        </div>
+        <div class="mybtn">
+            <button id="postingbtn" type="button" class="btn btn-dark">기록하기</button>
+            <button id="close" type="button" class="btn btn-outline-dark">닫기</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
