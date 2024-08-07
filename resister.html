@@ -117,10 +117,6 @@
         };
         await addDoc(collection(db, "team"), temp_data);
 
-        const teamRef = doc(db, 'team', name)
-        await updateDoc(memRef, {
-            capital: true
-        });
 
         location.replace('Team project.html');
     });
