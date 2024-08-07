@@ -49,8 +49,10 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";;
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getCountFromServer, count } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA1mO8GZrbaZbgCH2JgU38wlO6IRGgBu80",
@@ -66,16 +68,11 @@
         const db = getFirestore(app);
 
         $("#postingbtn").click(async function () {
-
-            const collectionRef = db.collection('bbs');
-            const bbscount = await collectionRef.count().get();
-            console.log(bbscount.data().count);
-
             let comment = $('#comment').val();
             let nickname = $('#nickname').val();
             let date = Date('%Y-%m-%d%H%S');
 
-            let doc = {
+            let posting_doc = {
                 'comment': comment,
                 'nickname': nickname,
                 'date': date
@@ -86,53 +83,29 @@
             } else if (comment == "") {
                 alert('코멘트를 입력해 주세요');
             } else {
-                await addDoc(collection(db, "bbs"), doc);
+                await addDoc(collection(db, "bbs"), posting_doc);
                 alert('저장 완료!');
                 window.location.reload();
             }
         });
 
-        $("#modifybtn").click(async function () {
-            let row = doc.data();
-
-            let nickname = row['nickname'];
-            let comment = row['comment'];
-
-            let doc = {
-                'comment': comment,
-                'nickname': nickname,
-                'date': date
-            };
-
-            if (nickname == "") {
-                alert('닉네임을 입력해주세요');
-            } else if (comment == "") {
-                alert('코멘트를 입력해 주세요');
-            } else {
-                await updateDoc(collection(db, "bbs"), doc);
-                alert('수정 완료!');
-                window.location.reload();
-            }
-
-
-        });
-
+        let deletedoc_id = 0;
         let docs = await getDocs(query(collection(db, "bbs"), orderBy('date', 'desc'), limit(5)));
-        docs.forEach((doc) => {
-            let row = doc.data();
-
+        docs.forEach((docs_item) => {
+            let row = docs_item.data();
+            deletedoc_id = docs_item.id;
             let nickname = row['nickname'];
             let comment = row['comment'];
             let date = row['date'];
-
+            console.log(deletedoc_id);
             let temp_html = `            
-        <div class="card">
+        <div class="card" id = "commentcard">
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
                     <p id="cmt">${comment}</p>
                         <div class = "cardbtn">
                         <button type="button" class="btn btn-outline-primary" id = "modifybtn">수정</button>
-                        <button type="button" class="btn btn-outline-secondary" id = "cancelbtn">삭제</button>
+                        <button type="button" class="btn btn-outline-secondary" id = "deletebtn">삭제</button>
                         </div>
                     <footer id="nickname" class="blockquote-footer">${nickname}</footer>
                     <footer id="date" class="blockquote-footer">${date}</footer>                            
@@ -140,6 +113,13 @@
             </div>
         </div>`;
             $('#comment-list').append(temp_html);
+            //forEach문 끝
+        });
+
+        $("#deletebtn").click(async function () {
+            await deleteDoc(doc(db, "bbs", deletedoc_id))
+            alert('삭제 완료!');
+            window.location.reload();
         });
     </script>
 </head>
