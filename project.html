@@ -4,12 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- J쿼리 cdn  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- 부트스트랩 cdn  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- css import -->
+    <link rel="stylesheet" type="text/css" href="static/bbs.css">
+    <!-- fontawesome cdn -->
+    <script src="https://kit.fontawesome.com/06263c1511.js" crossorigin="anonymous"></script>
+    <!-- bootstrap icon cdn  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+    <!-- 이 아래부터 nav bar -->
+    <div>
+        <nav class="navbar">
+            <div class="navbar_logo">
+                <i class="fa-solid fa-code-pull-request"></i>
+                <a class="navbar_name" href="#">BCOMDEV15</a>
+            </div>
+            <ul class="navbar_menu">
+                <li><a href="Team project.html">Home</a></li>
+                <li><a href="project.html">Project</a></li>
+                <li><a href="member.html">Member</a></li>
+                <li><a href="bbs.html">BBS</a></li>
+            </ul>
+
+            <ul class="navbar_icon">
+                <li><i class="bi bi-file-earmark-code-fill"></i></li>
+            </ul>
+
+            <a class="navbar_toggleBtn" href="#">
+                <i class="fa-solid fa-bars"></i>
+            </a>
+        </nav>
+    </div>
+
     <title>💻팀 프로젝트 소개</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Batang&family=Gowun+Dodum&family=Hi+Melody&family=Protest+Riot&family=Ysabeau+SC:wght@1..1000&display=swap');
 
         * {
-            font-family: "Protest Riot", sans-serif;
+            font-family: "Gowun Dodum", sans-serif;
             font-weight: 400;
             font-style: normal;
         }
@@ -18,61 +54,67 @@
             background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVHxWzB_9KbBPtkTB-9TyE1ISj8ZQ1Fs5u6zTL5X3njzP8LV6XvviYwlZ0z4omvHkRKgI&usqp=CAU');
             background-position: center;
             background-size: cover;
+            text-align: center;
             color: white;
 
-            width: 1900px;
+            width: 100%;
             height: 250px;
-
-            border-radius: 8px;
-
             border: 2px solid;
-            font-size: xx-large;
+            margin-bottom: 50px;
+
+            overflow: hidden;
         }
-        .mian2{
-            font-size: 50px;
+
+        .title {
+            margin-top: 70px;
+            font-weight: bolder;
+        }
+
+        .main2 {
             background-size: cover;
             background-position: center;
-            color: rgb(236, 154, 247);
-
-            padding-top: 5px;
-            border-radius: 8px;
-
-            width: 1900px;
-            height: 70px;
-            
-            margin: 40px auto 0px 100px;
+            text-align: center;
         }
-        
-        .bo{
+
+        .bo {
             font-size: 20px;
             margin: auto auto 0px 80px;
-            color: black;
-
-
+            color: white;
+            padding-top: 60px;
             width: 900px;
         }
-        .prjt{
-            background-image: url('https://cdn.crowdpic.net/detail-thumb/thumb_d_E11170C4AD4C81C2EBEE23BF677BB23D.jpg');
-            background-size: cover;
 
+        .prjt {
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('https://miro.medium.com/v2/resize:fit:1192/1*7jCMzHmTj0fuGH0OR6p5dA.png');
+            opacity: 0.8;
+            background-size: cover;
             border-radius: 8px;
         }
-        .emuji{
+
+        .emuji {
             padding: 1px;
             font-size: 70px;
             margin: 60px auto 0px 40px;
         }
-        .a{
-            margin: 0px auto 0px 100px;
+
+        .a {
+            margin: auto;
         }
-        .b{
+
+        .b {
             margin: 0px auto 0px 40px;
         }
-        .c{
+
+        .c {
             margin: 0px auto 0px 40px;
         }
-        .a1{
+
+        .a1 {
             font-size: 30spx;
+        }
+
+        .bo p {
+            font-size: 15px;
         }
 
     </style>
@@ -80,32 +122,32 @@
 
 <body>
     <div class="main">
-        <h1>TEAM. 🎮개발자가되구15</h1>
-        <P class="emuji">📕</P>
-    </div>
-        <h2 class="mian2">15조 - 🎮개발자가되구15</h2>
-        <div class="prjt">
-        <div class="bo">
-        <p class="a1">✨프로젝트 명 : 동료가 되구싶오!</p>
-        <p class="a">✨소개</p>
-        <p>▪한줄 소개 : TEAM 소개 할수있는 페이지</p>
-        <p>▪프로젝트 구성</p>
-        <DIV class="b">
-        <P>◽홈화면 </P>
-        <P>◽프로젝트 소개 페이지</P>
-        <P>◽TEAM 소개 페이지 </P>
-        <P>◽방명록</P>
-        </DIV>
-        <p>▪프로젝트 기능</p>
-        <div class="c">
-        <P>◽ </P>
-        <P>◽ </P>
-        <P>◽ </P>
-        <P>◽ </P>
-        </div>
-    </div>
+        <h1 class = "title" style="font-family: 'Protest Riot', sans-serif; font-size: 80px;">TEAM. BCOMDEV15</h1>
+        <h4 class="main2">🎮개발자가 되구15</h4>
     </div>
     
+    <div class="prjt">
+        <div class="bo">
+            <h2 class="a1">✨프로젝트 명 : 동료가 되구싶오!</h2>
+            <h4>◆소개</h4>
+            <p>한줄 소개 : TEAM 소개 할수있는 페이지</p>
+            <h4>◆프로젝트 구성</h4>
+            <DIV class="b">
+                <P>◽홈화면 </P>
+                <P>◽프로젝트 소개 페이지</P>
+                <P>◽TEAM 소개 페이지 </P>
+                <P>◽방명록</P>
+            </DIV>
+            <h4>◆프로젝트 기능</h4>
+            <div class="c">
+                <P>◽ </P>
+                <P>◽ </P>
+                <P>◽ </P>
+                <P>◽ </P>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
