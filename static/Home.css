@@ -1,5 +1,3 @@
-
-
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
 
 * {
@@ -77,6 +75,16 @@
     height: 200px;
     border-radius: 20px;
 }
+
+.github_jandi {
+    text-align: center; 
+    margin: 50px;
+}
+
+.github_jandi > p > img {
+    width: 600px;
+}
+
 
 /* 이 아래로 nav bar 항목 */
         .navbar {
