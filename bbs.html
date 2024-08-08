@@ -67,6 +67,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        //저장
         $("#postingbtn").click(async function () {
             let comment = $('#comment').val();
             let nickname = $('#nickname').val();
@@ -89,38 +90,325 @@
             }
         });
 
-        let deletedoc_id = 0;
+
         let docs = await getDocs(query(collection(db, "bbs"), orderBy('date', 'desc'), limit(5)));
+
         docs.forEach((docs_item) => {
             let row = docs_item.data();
-            deletedoc_id = docs_item.id;
+            let doc_id = docs_item.id;
             let nickname = row['nickname'];
             let comment = row['comment'];
             let date = row['date'];
-            console.log(deletedoc_id);
-            let temp_html = `            
-        <div class="card" id = "commentcard">
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p id="cmt">${comment}</p>
-                        <div class = "cardbtn">
-                        <button type="button" class="btn btn-outline-primary" id = "modifybtn">수정</button>
-                        <button type="button" class="btn btn-outline-secondary" id = "deletebtn">삭제</button>
-                        </div>
-                    <footer id="nickname" class="blockquote-footer">${nickname}</footer>
-                    <footer id="date" class="blockquote-footer">${date}</footer>                            
-                </blockquote>
-            </div>
-        </div>`;
-            $('#comment-list').append(temp_html);
+
+            let card_body_temp = document.createElement("div");
+            card_body_temp.className = "card";
+            card_body_temp.id = "commentcard";
+
+            //<div class="card" id="commentcard">
+
+            let div_body_temp = document.createElement("div");
+            div_body_temp.className = "card-body";
+
+            //<div class="card-body">
+
+            let block_temp = document.createElement("blockquote");
+            block_temp.className = "blockquote mb-0"
+
+
+            let cmt_temp = document.createElement("p");
+            cmt_temp.id = "cmt";
+            cmt_temp.textContent = comment;
+
+            //수정 메시지 박스를 띄울 방법
+            //<input type="email" class="form-control" id="inputimage" placeholder="이미지" input value="${image}">
+            //<label for="floatingInput">팀원 이미지</label>
+            /*
+                <div class="mypost">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="nickname" placeholder="닉네임">
+                        <label for="floatingInput">닉네임</label>
+                    </div>
+                    <div class="form-floating">
+                        <textarea class="form-control" id="comment" placeholder="내용" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">내용</label>
+                    </div>
+                    수정 취소 버튼
+                </div>
+            */
+
+            
+            //수정버튼 누르면 열리게 만든 인풋 박스
+            let upd_box_temp = document.createElement("div");
+            upd_box_temp.className = "mypost";
+
+            let cmt_input_div_temp = document.createElement("div");
+            cmt_input_div_temp.className = "form-floating mb-3";
+
+            let cmt_input_temp = document.createElement("input");
+            cmt_input_temp.type = "email";
+            cmt_input_temp.className = "form-control";
+            cmt_input_temp.id = "input_nick";
+            cmt_input_temp.placeholder = nickname;
+
+            let cmt_input_label_temp = document.createElement("label");
+            cmt_input_label_temp.for = "floatingInput"
+            cmt_input_label_temp.textContent = nickname;
+
+            //코멘트 입력 인풋 박스
+            cmt_input_div_temp.appendChild(cmt_input_temp);
+            cmt_input_div_temp.appendChild(cmt_input_label_temp);
+
+
+            let textbox_div_temp = document.createElement("div");
+            cmt_input_div_temp.className = "form-floating";
+
+            let textbox_temp = document.createElement("textarea");
+            textbox_temp.className = "form-control";
+            textbox_temp.id = "input_comment";
+            textbox_temp.placeholder = comment;
+            textbox_temp.style = "height: 100px"
+
+            /*
+            let textbox_label_temp = document.createElement("label");
+            textbox_label_temp.for = "floatingTextarea2";
+            textbox_label_temp.textContent = comment;
+*/
+            
+            //닉네임 입력 인풋 박스
+            textbox_div_temp.appendChild(textbox_temp);
+            //textbox_div_temp.appendChild(textbox_label_temp);
+
+
+            let upd_box_btn = document.createElement("button");
+            upd_box_btn.type = "button";
+            upd_box_btn.className = "btn btn-outline-secondary";
+            upd_box_btn.id = "updatebtn";
+            upd_box_btn.textContent = "수정";
+
+            let cancle_box_btn = document.createElement("button");
+            cancle_box_btn.type = "button";
+            cancle_box_btn.className = "btn btn-outline-secondary";
+            cancle_box_btn.id = "canclebtn";
+            cancle_box_btn.textContent = "취소";
+
+
+            //upd_bot_temp의 내부로 하위 부품들 추가
+            //이걸로 수정 인풋 박스 구조 완성
+            upd_box_temp.appendChild(cmt_input_div_temp);
+            upd_box_temp.appendChild(textbox_div_temp);
+            upd_box_temp.appendChild(upd_box_btn);
+            upd_box_temp.appendChild(cancle_box_btn);
+
+
+            /*카드별로 각각 
+
+            let temp_html = `
+                <div class="card" id="commentcard">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p id="cmt">${comment}</p>
+                            <div class="cardbtn" id="btn">
+                                <button type="button" class="btn btn-outline-primary" id="modifybtn">수정</button>
+                                <button type="button" class="btn btn-outline-secondary" id="deletebtn">삭제</button>
+                            </div>
+                            <footer id="nickname" class="blockquote-footer">${nickname}</footer>
+                            <footer id="date" class="blockquote-footer">${date}</footer>
+                        </blockquote>
+                    </div>
+                </div>`;
+                이런 백택방식이 아니라 html문으로 직접 입력되게 하는 방법
+                */
+            let cardbtn_temp = document.createElement("div");
+            cardbtn_temp.className = "cardbtn";
+            cardbtn_temp.id = "btn";
+
+            let upd_btn = document.createElement("button");
+            upd_btn.type = "button";
+            upd_btn.className = "btn btn-outline-secondary";
+            upd_btn.id = "modifybtn";
+            upd_btn.textContent = "수정";
+
+
+            let del_btn = document.createElement("button");
+            del_btn.type = "button";
+            del_btn.className = "btn btn-outline-secondary";
+            del_btn.id = "deletebtn";
+            del_btn.textContent = "삭제";
+
+            let nick_temp = document.createElement("footer");
+            nick_temp.className = "blockquote-footer";
+            nick_temp.id = "nickname";
+            nick_temp.textContent = nickname;
+
+            let date_temp = document.createElement("footer");
+            date_temp.className = "blockquote-footer";
+            date_temp.id = "date";
+            date_temp.textContent = date;
+
+            cardbtn_temp.appendChild(upd_btn);
+            cardbtn_temp.appendChild(del_btn);
+
+            block_temp.appendChild(cmt_temp);
+            block_temp.appendChild(cardbtn_temp);
+            block_temp.appendChild(nick_temp);
+            block_temp.appendChild(date_temp);
+
+
+            div_body_temp.appendChild(block_temp);
+
+            card_body_temp.appendChild(div_body_temp);
+
+            /*
+            console.log(card_body_temp);
+            
+            console.log(div_body_temp);
+
+            console.log(block_temp);
+
+            console.log(cmt_temp);
+            
+            console.log(cardbtn_temp);
+
+            console.log(upd_btn);
+
+            console.log(del_btn);
+
+            console.log(nick_temp);
+
+            console.log(date_temp);
+
+            cardbtn_temp.appendChild(upd_btn);
+            cardbtn_temp.appendChild(del_btn);
+
+            block_temp.appendChild(cmt_temp);
+            block_temp.appendChild(cardbtn_temp);
+            block_temp.appendChild(nick_temp);
+            block_temp.appendChild(date_temp);
+
+            div_body_temp.appendChild(block_temp);
+            
+            card_body_temp.appendChild(div_body_temp);
+            */
+
+            /*
+            let temp_html = `
+                <div class="card" id="commentcard">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p id="cmt">${comment}</p>
+                            <div class="cardbtn" id="btn">
+                                <button type="button" class="btn btn-outline-primary" id="modifybtn">수정</button>
+                                <button type="button" class="btn btn-outline-secondary" id="deletebtn">삭제</button>
+                            </div>
+                            <footer id="nickname" class="blockquote-footer">${nickname}</footer>
+                            <footer id="date" class="blockquote-footer">${date}</footer>
+                        </blockquote>
+                    </div>
+                </div>`;
+        */
+
+            $('#comment-list').append(card_body_temp);
+
+            upd_btn.addEventListener("click", async function () {
+                $('.mypost').toggle();
+                $('#comment-list').toggle();
+                $('#comment-upd').append(upd_box_temp);
+
+                upd_box_btn.addEventListener("click", async function () {
+                    let inputnick = $('#input_nick').val();
+                    let inputcmt = $('#input_comment').val();
+                    let inputdate = Date('%Y-%m-%d%H%S');
+
+                    console.log(inputnick);
+                    console.log(inputcmt);
+
+                    if (inputnick == "") {
+                        alert('닉네임을 입력해주세요');
+                    } else if (inputcmt == "") {
+                        alert('코멘트를 입력해 주세요');
+                    } else {
+                        
+                        await updateDoc(doc(db, "bbs", doc_id), {
+                            'comment': inputcmt,
+                            'nickname': inputnick,
+                            'date': inputdate
+                        });
+                        alert('수정 완료!');
+                        window.location.reload();
+                    }
+                    /*
+                    let row = docs_item.data();
+                    let doc_id = docs_item.id;
+                    let nickname = row['nickname'];
+                    let comment = row['comment'];
+                    let date = row['date'];*/
+                })
+
+                cancle_box_btn.addEventListener("click", async function () {
+
+                        alert('취소');
+                        window.location.reload();
+                    }
+                    /*
+                    let row = docs_item.data();
+                    let doc_id = docs_item.id;
+                    let nickname = row['nickname'];
+                    let comment = row['comment'];
+                    let date = row['date'];*/
+                )
+
+                //await updateDoc(doc(db, "bbs", doc_id));
+                alert("수정하는 탭으로 변경");
+
+            })
+
+            /*
+            $('#update-btn').click(async function () {
+
+                let inputimage = $('#inputimage').val();
+                let inputname = $('#inputname').val();
+                let inputage = $('#inputage').val();
+                let inputdate = $('#inputdate').val();
+                let inputbr = $('#inputbr').val();
+                let inputgithub = $('#inputgithub').val();
+                let inputmbti = $('#inputmbti').val();
+                let inputgo = $('#inputgo').val();
+
+
+                await updateDoc(doc(db, "team", doc_id), {
+                    'image': inputimage,
+                    'name': inputname,
+                    'age': inputage,
+                    'date': inputdate,
+                    'br': inputbr,
+                    'github': inputgithub,
+                    'mbti': inputmbti,
+                    'go': inputgo
+                });
+
+                window.location.reload();
+            })
+            */
+
+            del_btn.addEventListener("click", async function () {
+                await deleteDoc(doc(db, "bbs", doc_id))
+                alert('삭제 완료!');
+                window.location.reload();
+            })
+
+
+
+            /*
+            $("").click(async function () {
+                            //await deleteDoc(doc(db, "bbs", doc_id))
+                            alert('삭제 완료!');
+                        window.location.reload();
+                })*/
+
+
             //forEach문 끝
         });
 
-        $("#deletebtn").click(async function () {
-            await deleteDoc(doc(db, "bbs", deletedoc_id))
-            alert('삭제 완료!');
-            window.location.reload();
-        });
     </script>
 </head>
 
@@ -141,6 +429,9 @@
     </div>
 
     <div class="mybbs" id="comment-list">
+    </div>
+
+    <div id="comment-upd">
     </div>
 
 </body>
