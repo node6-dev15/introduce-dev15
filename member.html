@@ -263,12 +263,27 @@
 
             $('#card').append(div);
         });
+
+        let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
+        fetch(url).then(res => res.json()).then(data => {
+            let temp = data['temp'];
+            $('#c').text(temp);
+            let url = "http://spartacodingclub.shop/sparta_api/seoulair";
+            fetch(url).then(res => res.json()).then(data => {
+                let mise = data['RealtimeCityAir']['row'][0]['IDEX_NM']
+                $('#msg').text(mise);
+            })
+        })
+
+
     </script>
 </head>
 
 <body>
     <div class="mytitle">
         <h1>TEAM. 개발자가되구15</h1>
+        <p>현재 서울의 기온 : <span id="c"></span>도</p>
+        <p>현재 서울의 미세먼지 : <span id="msg">나쁨</span></p>
     </div>
 
     <div id="postingbox">
