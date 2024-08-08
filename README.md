@@ -19,7 +19,12 @@
 * HTML 5
 * CSS 3
 * Javascript
-* MongoDB
+* Firebase (Firestore Query 9) 
 
 
 ### 💡와이어프레임
+![image](https://github.com/user-attachments/assets/aa80df12-d5f6-4f7d-86bd-386abd577ec3)
+![image](https://github.com/user-attachments/assets/87cd1fac-739f-40a7-b039-c05237630a57)
+
+### 이미지
+![image](https://github.com/user-attachments/assets/9bf5e4b4-3f2e-46de-a045-7314cf780fa2)
