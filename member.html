@@ -13,6 +13,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- css import -->
     <link rel="stylesheet" type="text/css" href="static/bbs.css">
+    <link rel="stylesheet" type="text/css" href="static/member.css">
     <!-- fontawesome cdn -->
     <script src="https://kit.fontawesome.com/06263c1511.js" crossorigin="anonymous"></script>
     <!-- bootstrap icon cdn  -->
@@ -42,77 +43,10 @@
     </div>
 
     <title>개발자가되구15 > member</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
 
-        * {
-            font-family: "Gowun Batang", serif;
-        }
-
-        .mytitle {
-            height: 250px;
-            color: black;
-            margin: 30px auto 10px auto;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVHxWzB_9KbBPtkTB-9TyE1ISj8ZQ1Fs5u6zTL5X3njzP8LV6XvviYwlZ0z4omvHkRKgI&usqp=CAU');
-            background-position: center;
-            background-size: cover;
-        }
-
-        .mytitle>button {
-            width: 150px;
-            height: 50px;
-            background-color: transparent;
-            color: black;
-            border: 1px solid black;
-            border-radius: 5px;
-
-            margin-top: 20px;
-
-        }
-
-        .mycards {
-            width: 1200px;
-            margin: 30px auto 0px auto;
-
-        }
-
-        .mypostingbox {
-            width: 500px;
-            margin: 30px auto 0px auto;
-            padding: 20px;
-            box-shadow: 0px 0px 3px 0px blue;
-            border-radius: 5px;
-        }
-
-        .mybtn {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-
-            margin: 10px auto 5px auto;
-
-        }
-
-        .mybtn>button {
-            margin-right: 5px;
-        }
-
-        .card-updel {
-            display: flex;
-            justify-content: end;
-        }
-    </style>
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
@@ -142,7 +76,7 @@
 
         const board = collection(db, "team");
 
-        let docs = await getDocs(query(board, orderBy('name', 'asc')));
+        // let docs = await getDocs(query(board, orderBy('name', 'asc')));
 
         docs.forEach((tempdoc) => {
             let row = tempdoc.data();
@@ -263,7 +197,10 @@
 
             $('#card').append(div);
         });
+    </script>
 
+    <!-- 날씨 스크립트 단독실행 -->
+    <script>
         let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
         fetch(url).then(res => res.json()).then(data => {
             let temp = data['temp'];
@@ -274,8 +211,6 @@
                 $('#msg').text(mise);
             })
         })
-
-
     </script>
 </head>
 
@@ -284,6 +219,29 @@
         <h1>TEAM. 개발자가되구15</h1>
         <p>현재 서울의 기온 : <span id="c"></span>도</p>
         <p>현재 서울의 미세먼지 : <span id="msg">나쁨</span></p>
+    </div>
+
+    <div class="profilebox" id="wrap">
+        <div class="profile">
+            <a href="https://github.com/mingyu6688" target="_blank">
+                <img src="https://avatars.githubusercontent.com/u/177496897?v=4">
+            </a>
+        </div>
+        <div class="profile">
+            <a href="https://github.com/liha-engineer" target="_blank">
+                <img src="https://avatars.githubusercontent.com/u/122168823?v=4">
+            </a>
+        </div>
+        <div class="profile">
+            <a href="https://github.com/sdh02142" target="_blank">
+                <img src="https://avatars.githubusercontent.com/u/177493329?v=4">
+            </a>
+        </div>
+        <div class="profile">
+            <a href="https://github.com/Chong-Chongs" target="_blank">
+                <img src="https://avatars.githubusercontent.com/u/176998915?v=4">
+            </a>
+        </div>
     </div>
 
     <div id="postingbox">
@@ -302,20 +260,19 @@
                     style="width: 1000px;">
             </a>
         </div>
-        <div class = "github_jandi" style="text-align: center; margin: 50px;">
+
+        <div class="github_jandi" style="text-align: center; margin: 50px;">
             <p>잔디 랜덤가챠 - 누구의 잔디일까</p>
-            <a href="https://github.com/mingyu6688" target="_blank">
-                <img src="https://ghchart.rshah.org/mingyu6688" style="width: 500px;"/>
-            </a>
-            <a href="https://github.com/liha-engineer" target="_blank">
-                <img src="https://ghchart.rshah.org/liha-engineer" style="width: 500px;"/>
-            </a>
-            <a href="https://github.com/sdh02142" target="_blank">
-                <img src="https://ghchart.rshah.org/sdh02142" style="width: 500px;"/>
-            </a>
-            <a href="https://github.com/Chong-Chongs" target="_blank">
-                <img src="https://ghchart.rshah.org/Chong-Chongs" style="width: 500px;"/>
-            </a>
+            <p>
+                <img src="https://ghchart.rshah.org/mingyu6688" style="width: 500px;" />
+                <img src="https://ghchart.rshah.org/liha-engineer" style="width: 500px;" />
+
+            </p>
+            <p>
+                <img src="https://ghchart.rshah.org/sdh02142" style="width: 500px;" />
+                <img src="https://ghchart.rshah.org/Chong-Chongs" style="width: 500px;" />
+            </p>
+
         </div>
 
     </div>
