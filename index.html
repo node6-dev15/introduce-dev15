@@ -47,11 +47,11 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <script>
-        let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
+        let url = "https://spartacodingclub.shop/sparta_api/weather/seoul";
         fetch(url).then(res => res.json()).then(data => {
             let temp = data['temp'];
             $('#c').text(temp);
-            let url = "http://spartacodingclub.shop/sparta_api/seoulair";
+            let url = "https://spartacodingclub.shop/sparta_api/seoulair";
             fetch(url).then(res => res.json()).then(data => {
                 let mise = data['RealtimeCityAir']['row'][0]['IDEX_NM']
                 $('#msg').text(mise);
