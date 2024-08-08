@@ -1,4 +1,4 @@
-## 🤝동료가 되구싶오
+![image](https://github.com/user-attachments/assets/a77df4d1-2697-43e6-9ad4-599e26c964e7)## 🤝동료가 되구싶오
 
 #### 내일배움캠프 Node 6기 첫 프로젝트 15조 - 개발자가되구15
 #### [프로젝트 노션](https://www.notion.so/teamsparta/15-746a3ae71d0541d4a5aa6de7285882df)
@@ -30,5 +30,6 @@
 ![image](https://github.com/user-attachments/assets/c0918947-96c5-47ba-a148-66b191b78fbd)
 ![image](https://github.com/user-attachments/assets/5aa2b687-cf2e-45a4-85c6-073526fc661a)
 ![image](https://github.com/user-attachments/assets/cd92ee8f-6160-43c1-9a2f-546ad88c0f1b)
-![image](https://github.com/user-attachments/assets/bc7f63b1-da7c-4582-a546-660fe93bf7f4)
+![image](https://github.com/user-attachments/assets/612a18ac-3c42-4733-b155-74a50e128d83)
 
+#### 고생 많으셨어요 15조! 개발자가 되어 또 만나요🤗
