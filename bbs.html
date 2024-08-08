@@ -85,7 +85,7 @@
                 alert('코멘트를 입력해 주세요');
             } else {
                 await addDoc(collection(db, "bbs"), posting_doc);
-                alert('저장 완료!');
+                alert('등록 완료!');
                 window.location.reload();
             }
         });
@@ -136,7 +136,7 @@
                 </div>
             */
 
-            
+
             //수정버튼 누르면 열리게 만든 인풋 박스
             let upd_box_temp = document.createElement("div");
             upd_box_temp.className = "mypost";
@@ -162,20 +162,20 @@
 
 
             let textbox_div_temp = document.createElement("div");
-            textbox_div_temp.className = "form-floating mb-3";
+            textbox_div_temp.className = "form-floating";
 
 
-            let textbox_temp = document.createElement("input");
-            textbox_temp.type = "text";
+            let textbox_temp = document.createElement("textarea");
+            //textbox_temp.type = "text";
             textbox_temp.className = "form-control";
             textbox_temp.id = "input_comment";
             textbox_temp.value = comment;
             textbox_temp.placeholder = comment;
             textbox_temp.style = "height: 100px"
 
-            
+
             let textbox_label_temp = document.createElement("label");
-            textbox_label_temp.for = "floatingInput";
+            textbox_label_temp.for = "floatingTextarea2";
             textbox_label_temp.textContent = "코멘트";
 
 
@@ -195,7 +195,7 @@
             cancle_box_btn.type = "button";
             cancle_box_btn.className = "btn btn-outline-secondary";
             cancle_box_btn.id = "canclebtn";
-            cancle_box_btn.textContent = "취소";
+            cancle_box_btn.textContent = "닫기";
 
 
             //upd_bot_temp의 내부로 하위 부품들 추가
@@ -330,7 +330,7 @@
                     } else if (inputcmt == "") {
                         alert('코멘트를 입력해 주세요');
                     } else {
-                        
+
                         await updateDoc(doc(db, "bbs", doc_id), {
                             'comment': inputcmt,
                             'nickname': inputnick,
@@ -349,9 +349,9 @@
 
                 cancle_box_btn.addEventListener("click", async function () {
 
-                        alert('취소');
-                        window.location.reload();
-                    }
+                    //alert('취소');
+                    window.location.reload();
+                }
                     /*
                     let row = docs_item.data();
                     let doc_id = docs_item.id;
@@ -361,7 +361,7 @@
                 )
 
                 //await updateDoc(doc(db, "bbs", doc_id));
-                alert("수정하는 탭으로 변경");
+                //alert("수정하는 탭으로 변경");
 
             })
 
@@ -394,9 +394,17 @@
             */
 
             del_btn.addEventListener("click", async function () {
-                await deleteDoc(doc(db, "bbs", doc_id))
-                alert('삭제 완료!');
-                window.location.reload();
+
+                const isDel = confirm("삭제하시겠습니까?");
+
+                if (isDel == true) {
+                    await deleteDoc(doc(db, "bbs", doc_id))
+                    alert("삭제가 완료되었습니다!");
+                    window.location.reload();
+                }
+                else {
+                    alert("삭제가 취소되었습니다");
+                }
             })
 
 
