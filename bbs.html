@@ -141,42 +141,48 @@
             let upd_box_temp = document.createElement("div");
             upd_box_temp.className = "mypost";
 
+            //닉네임 입력 인풋 박스
             let cmt_input_div_temp = document.createElement("div");
             cmt_input_div_temp.className = "form-floating mb-3";
 
             let cmt_input_temp = document.createElement("input");
-            cmt_input_temp.type = "email";
+            cmt_input_temp.type = "text";
             cmt_input_temp.className = "form-control";
             cmt_input_temp.id = "input_nick";
+            cmt_input_temp.value = nickname;
             cmt_input_temp.placeholder = nickname;
 
             let cmt_input_label_temp = document.createElement("label");
             cmt_input_label_temp.for = "floatingInput"
-            cmt_input_label_temp.textContent = nickname;
+            cmt_input_label_temp.textContent = "닉네임";
 
-            //코멘트 입력 인풋 박스
+            //닉네임 입력 인풋 박스
             cmt_input_div_temp.appendChild(cmt_input_temp);
             cmt_input_div_temp.appendChild(cmt_input_label_temp);
 
 
             let textbox_div_temp = document.createElement("div");
-            cmt_input_div_temp.className = "form-floating";
+            textbox_div_temp.className = "form-floating mb-3";
 
-            let textbox_temp = document.createElement("textarea");
+
+            let textbox_temp = document.createElement("input");
+            textbox_temp.type = "text";
             textbox_temp.className = "form-control";
             textbox_temp.id = "input_comment";
+            textbox_temp.value = comment;
             textbox_temp.placeholder = comment;
             textbox_temp.style = "height: 100px"
 
-            /*
-            let textbox_label_temp = document.createElement("label");
-            textbox_label_temp.for = "floatingTextarea2";
-            textbox_label_temp.textContent = comment;
-*/
             
-            //닉네임 입력 인풋 박스
+            let textbox_label_temp = document.createElement("label");
+            textbox_label_temp.for = "floatingInput";
+            textbox_label_temp.textContent = "코멘트";
+
+
+            //코멘트 입력 인풋 박스
             textbox_div_temp.appendChild(textbox_temp);
-            //textbox_div_temp.appendChild(textbox_label_temp);
+            textbox_div_temp.appendChild(textbox_label_temp);
+
 
 
             let upd_box_btn = document.createElement("button");
@@ -318,9 +324,6 @@
                     let inputnick = $('#input_nick').val();
                     let inputcmt = $('#input_comment').val();
                     let inputdate = Date('%Y-%m-%d%H%S');
-
-                    console.log(inputnick);
-                    console.log(inputcmt);
 
                     if (inputnick == "") {
                         alert('닉네임을 입력해주세요');
