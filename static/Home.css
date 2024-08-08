@@ -58,15 +58,24 @@
     margin-top: 10px;
 }
 
+.dongryo {
+    text-align: center; 
+    margin-top: 100px
+}
+
+.dongryo > a > img {
+     filter: drop-shadow(3px 3px 3px #c3c3c3)
+}
+
 .profilebox {
-    margin-top : 100px;
+    margin-top : 50px;
     width: 100%;
     justify-content: center;
     display: flex;
 }
 
 .profile {
-    margin-left : 50px;
+    margin : 30px 0px 30px 30px;
     filter: drop-shadow(3px 3px 3px #c3c3c3)
 }
 
@@ -78,10 +87,11 @@
 
 .github_jandi {
     text-align: center; 
-    margin: 50px;
+    margin: 50px auto;
 }
 
 .github_jandi > p > img {
+    padding-bottom: 20px;
     width: 600px;
 }
 
