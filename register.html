@@ -116,8 +116,8 @@
             'go': go
         };
         await addDoc(collection(db, "team"), temp_data);
-
-
+        
+        alert("등록 완료!");
         location.replace('member.html');
     });
     
@@ -165,7 +165,7 @@
             <label for="floatingInput">각오 한마디</label>
         </div>
         <div class="mybtn">
-            <button id="postingbtn" type="button" class="btn btn-dark">기록하기</button>
+            <button id="postingbtn" type="button" class="btn btn-dark">등록하기</button>
             <button id="close" type="button" class="btn btn-outline-dark">닫기</button>
         </div>
     </div>
